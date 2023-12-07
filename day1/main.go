@@ -28,7 +28,7 @@ func main() {
 	}
 
 	fmt.Println("Sum for Part1 solution:", part1Sum)
-	fmt.Println("Sum for Part2 soltion:", part2Sum)
+	fmt.Println("Sum for Part2 solution:", part2Sum)
 }
 
 // Gets the first and last digit in the string and returns a single int
