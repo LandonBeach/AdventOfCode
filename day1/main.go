@@ -12,11 +12,14 @@ func main() {
 	file := utils.OpenFile("input.txt")
 	defer file.Close()
 
-	runningSum := 0
+	part1Sum := 0
+	part2Sum := 0
 	scanner := bufio.NewScanner(file)
 
 	for scanner.Scan() {
-		runningSum += firstLastDigits(scanner.Text())
+		part1SubTotal, part2SubTotal := firstLastDigits(scanner.Text())
+		part1Sum += part1SubTotal
+		part2Sum += part2SubTotal
 	}
 
 	if err := scanner.Err(); err != nil {
@@ -24,11 +27,12 @@ func main() {
 		panic(err)
 	}
 
-	fmt.Println(runningSum)
+	fmt.Println("Sum for Part1 solution:", part1Sum)
+	fmt.Println("Sum for Part2 soltion:", part2Sum)
 }
 
 // Gets the first and last digit in the string and returns a single int
-func firstLastDigits(line string) int {
+func firstLastDigits(line string) (int, int) {
 	var firstDigit, lastDigit int
 	var firstIndex, lastIndex int = len(line), -1
 
@@ -49,6 +53,8 @@ func firstLastDigits(line string) int {
 			break
 		}
 	}
+
+	part1SubTotal := (firstDigit * 10) + lastDigit
 
 	// Digit word to value map
 	numberSubStrings := map[string]int{
@@ -82,6 +88,8 @@ func firstLastDigits(line string) int {
 		}
 	}
 
+	part2SubTotal := (firstDigit * 10) + lastDigit
+
 	// Combine both digits into a single int
-	return (firstDigit * 10) + lastDigit
+	return part1SubTotal, part2SubTotal
 }
