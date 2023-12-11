@@ -27,7 +27,7 @@ func main() {
 
 	for race, time := range raceTime {
 		waysToBeat := 0
-		for millisecond := 1; millisecond < time; millisecond++ {
+		for millisecond := recordDistance[race] / time; millisecond < time; millisecond++ {
 			remainingTime := time - millisecond
 			if distance := remainingTime * millisecond; distance > recordDistance[race] {
 				if remainingTime == time/2 {
