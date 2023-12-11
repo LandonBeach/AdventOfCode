@@ -30,7 +30,7 @@ func (g *Gear) addRatio(value int) {
 
 // A ratio is calculated only when the gear
 // is attached to exactly 2 engine parts
-func (g *Gear) Ratio() int {
+func (g Gear) Ratio() int {
 	if len(g.ratio) == 2 {
 		return g.ratio[0] * g.ratio[1]
 	}
