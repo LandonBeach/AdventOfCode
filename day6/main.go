@@ -36,10 +36,10 @@ func main() {
 		recordBreakingWays = append(recordBreakingWays, waysToBeat)
 	}
 
-	total := 1
+	part1Total := 1
 	for _, numberWays := range recordBreakingWays {
-		total *= numberWays
+		part1Total *= numberWays
 	}
 
-	fmt.Println("Number of ways you can beat the record all multiplied together:", total)
+	fmt.Println("Part 1 - Number of ways you can beat the record all multiplied together:", part1Total)
 }
