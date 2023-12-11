@@ -54,6 +54,7 @@ func firstLastDigits(line string) (int, int) {
 		}
 	}
 
+	// Combine both digits into a single int
 	part1SubTotal := (firstDigit * 10) + lastDigit
 
 	// Digit word to value map
@@ -88,8 +89,9 @@ func firstLastDigits(line string) (int, int) {
 		}
 	}
 
+	// Combine both digits into a single int
 	part2SubTotal := (firstDigit * 10) + lastDigit
 
-	// Combine both digits into a single int
+	// Return the sub-totals for the part 1 and part 2 solutions
 	return part1SubTotal, part2SubTotal
 }
