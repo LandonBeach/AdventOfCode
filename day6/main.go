@@ -21,16 +21,21 @@ func main() {
 
 	// Convert the string to []int
 	raceTime := utils.StringsToInts(strings.Fields(fileTimes))
-	raceDistance := utils.StringsToInts(strings.Fields(fileDistance))
+	recordDistance := utils.StringsToInts(strings.Fields(fileDistance))
 
 	var recordBreakingWays []int
 
-	for race, recordTime := range raceTime {
+	for race, time := range raceTime {
 		waysToBeat := 0
-		for millisecond := 1; millisecond < recordTime; millisecond++ {
-			remainingTime := recordTime - millisecond
-			if distance := remainingTime * millisecond; distance > raceDistance[race] {
-				waysToBeat++
+		for millisecond := 1; millisecond < time; millisecond++ {
+			remainingTime := time - millisecond
+			if distance := remainingTime * millisecond; distance > recordDistance[race] {
+				if remainingTime == time/2 {
+					waysToBeat *= 2
+					break
+				} else {
+					waysToBeat++
+				}
 			}
 		}
 		recordBreakingWays = append(recordBreakingWays, waysToBeat)
