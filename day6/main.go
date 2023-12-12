@@ -7,12 +7,23 @@ import (
 	"strings"
 )
 
+/*
+ * Day 6 Instructions:
+ * You will get a fixed amount of time during which your boat has to travel as far as it can, and you win if your boat goes the farthest.
+ * Holding down the button charges the boat, and releasing the button allows the boat to move.
+ * Boats move faster if their button was held longer, but time spent holding the button counts against the total race time.
+ * You can only hold the button at the start of the race, and boats don't move until the button is released.
+ * The boat has a starting speed of zero millimeters per millisecond.
+ * For each whole millisecond you spend at the beginning of the race holding down the button, the boat's speed increases by one millimeter per millisecond.
+ * To see how much margin of error you have, determine the number of ways you can beat the record in each race and then multiply the results into a single value.
+ */
 func main() {
 	fileImport, err := os.ReadFile("input.txt")
 	if err != nil {
 		panic(err)
 	}
 
+	// Part 1 - each column indicates the total time of the race and the record distance
 	// Time: <int> <int>
 	// Distance: <int> <int>
 	file := strings.Split(string(fileImport), "\n")
@@ -30,6 +41,13 @@ func main() {
 		for millisecond := recordDistance[race] / time; millisecond < time; millisecond++ {
 			remainingTime := time - millisecond
 			if distance := remainingTime * millisecond; distance > recordDistance[race] {
+
+				// Only need to check half since the results are a palindrome. For example:
+				//   Hold the button for 2 milliseconds, giving the boat a speed of 2 millimeters per millisecond. It will then get 5 milliseconds to move, reaching a total distance of 10 millimeters.
+				//   Hold the button for 3 milliseconds. After its remaining 4 milliseconds of travel time, the boat will have gone 12 millimeters.
+				//   Hold the button for 4 milliseconds. After its remaining 3 milliseconds of travel time, the boat will have gone 12 millimeters.
+				//   Hold the button for 5 milliseconds, causing the boat to travel a total of 10 millimeters.
+				// Once we reach the center of the palindrome, then we just need to double the number of ways we can beat the record and break out of the loop.
 				if remainingTime == time/2 {
 					waysToBeat *= 2
 					break
