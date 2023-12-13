@@ -38,6 +38,7 @@ func main() {
 
 	for race, time := range raceTime {
 		waysToBeat := 0
+		prevDistance := 0
 		for millisecond := recordDistance[race] / time; millisecond < time; millisecond++ {
 			remainingTime := time - millisecond
 			if distance := remainingTime * millisecond; distance > recordDistance[race] {
@@ -48,15 +49,21 @@ func main() {
 				//   Hold the button for 4 milliseconds. After its remaining 3 milliseconds of travel time, the boat will have gone 12 millimeters.
 				//   Hold the button for 5 milliseconds, causing the boat to travel a total of 10 millimeters.
 				// Once we reach the center of the palindrome, then we just need to double the number of ways we can beat the record and break out of the loop.
-				if remainingTime == time/2 {
-					waysToBeat *= 2
+				if distance <= prevDistance && prevDistance != 0 {
+					if distance == prevDistance {
+						waysToBeat *= 2
+					} else {
+						waysToBeat = (waysToBeat * 2) - 1
+					}
 					break
 				} else {
 					waysToBeat++
 				}
+				prevDistance = distance
 			}
 		}
 		recordBreakingWays = append(recordBreakingWays, waysToBeat)
+
 	}
 
 	part1Total := 1
