@@ -34,6 +34,24 @@ func main() {
 	raceTime := utils.StringsToInts(strings.Fields(fileTimes))
 	recordDistance := utils.StringsToInts(strings.Fields(fileDistance))
 
+	recordBreakingWays := findRecordBreakingWays(raceTime, recordDistance)
+
+	part1Total := 1
+	for _, numberWays := range recordBreakingWays {
+		part1Total *= numberWays
+	}
+
+	fmt.Println("Part 1 - Number of ways you can beat the record all multiplied together:", part1Total)
+
+	// Part 2 - Input has bad kerning. There is only 1 race so we need to remove all spaces and make use a single number.
+	totalTime := utils.StringToInt(strings.ReplaceAll(fileTimes, " ", ""))
+	totalDistance := utils.StringToInt(strings.ReplaceAll(fileDistance, " ", ""))
+	recordBreakingWays = findRecordBreakingWays([]int{totalTime}, []int{totalDistance})
+
+	fmt.Println("Part 2 - Number of ways you can beat the record:", recordBreakingWays[0])
+}
+
+func findRecordBreakingWays(raceTime []int, recordDistance []int) []int {
 	var recordBreakingWays []int
 
 	for race, time := range raceTime {
@@ -64,13 +82,7 @@ func main() {
 			}
 		}
 		recordBreakingWays = append(recordBreakingWays, waysToBeat)
-
 	}
 
-	part1Total := 1
-	for _, numberWays := range recordBreakingWays {
-		part1Total *= numberWays
-	}
-
-	fmt.Println("Part 1 - Number of ways you can beat the record all multiplied together:", part1Total)
+	return recordBreakingWays
 }
